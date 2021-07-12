@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 
 export default function InsertForm({ onAddItem }) {
   const [text, setText] = useState("");
@@ -8,7 +9,11 @@ export default function InsertForm({ onAddItem }) {
     e.preventDefault();
 
     const newItem = { text };
+
     // Save item to server
+    const promise = axios.post('http://localhost:4000/items', newItem)
+    promise.then(() => alert('item adicionado à lista de compras'))
+    promise.catch(error => console.log(error.response.status))
 
     setText("");
     onAddItem();
